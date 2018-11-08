@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Restaurant-Client</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>   
+        <ui:composition template="./../Template/newTemplate.xhtml"> 
+            <ui:define name="content">
+                <p:growl id="msj" autoUpdate="true"/>
+                <h:form id="AgregM">
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="TIPO DOCUMENTO"/>
+                        <p:selectOneMenu value="#{clienteC.cliente.TDOC_CLIE}" >
+                            <f:selectItem itemLabel="SELECIONE" />
+                            <f:selectItem itemLabel="DNI" itemValue="D"/>
+                            <f:selectItem itemLabel="CARNET DE EXTRANGERIA" itemValue="C"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="DOCUMENTO"/>
+                        <p:inputText value="#{clienteC.cliente.DOCCLIE}" />
+
+                        <p:outputLabel value="NOMBRE"/>
+                        <p:inputText value="#{clienteC.cliente.NOMCLIE}" />
+
+                        <p:outputLabel value="APELLIDO PATERNO"/>
+                        <p:inputText value="#{clienteC.cliente.APEPATECLIE}" />
+
+                        <p:outputLabel value="APELLIDO MATERNO"/>
+                        <p:inputText value="#{clienteC.cliente.APEMATECLIE}" />
+
+                        <p:outputLabel value="TELEFONO"/>
+                        <p:inputText value="#{clienteC.cliente.TELFCLIE}" />
+
+                        <p:outputLabel value="CONTRASEÑA"/>
+                        <p:inputText value="#{clienteC.cliente.PWDCLIE}" />
+
+                        <p:outputLabel value="DIRECCION"/>
+                        <p:inputText value="#{clienteC.cliente.DIRCLIE}" />                    
+
+                        <p:commandButton value="Agregar" actionListener="#{clienteC.registrar()}" update="ListTabl"/>
+
+                    </p:panelGrid>
+                </h:form>
+                <br/>
+                <h:form id="ListTabl">
+
+                    <p:dataTable var="cliente" value="#{clienteC.lstCliente}" rows="10"
+                                 paginator="true"
+                                 paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">
+                        <p:column style="width:30px">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="TIPO DOCUMENTO">
+                            <h:outputText value="#{cliente.TDOC_CLIE}"/>
+                        </p:column>
+                        <p:column headerText="DOCUMENTO">
+                            <h:outputText value="#{cliente.DOCCLIE}"/>
+                        </p:column>
+                        <p:column headerText="NOMBRE">
+                            <h:outputText value="#{cliente.NOMCLIE}"/>
+                        </p:column>
+                        <p:column headerText="APELLIDO PATERNO">
+                            <h:outputText value="#{cliente.APEPATECLIE}"/>
+                        </p:column>
+                        <p:column headerText="APELLIDO MATERNO">
+                            <h:outputText value="#{cliente.APEMATECLIE}"/>
+                        </p:column>
+
+                        <p:rowExpansion>
+                            <p:panelGrid columns="2" >
+                                <h:outputText value="TELEFONO"  />
+                                <h:outputText value="#{cliente.TELFCLIE}" />
+
+                                <h:outputText value="CONTRASEÑA"/>
+                                <h:outputText value="#{cliente.PWDCLIE}"/>
+
+                                <h:outputText value="DIRECCION"/>
+                                <h:outputText value="#{cliente.DIRCLIE}"/>
+                            </p:panelGrid>
+                        </p:rowExpansion>
+
+
+                        <p:column style="width:50px"  exportable="false">
+                            <p:commandButton title="MODIFICAR" icon="ui-icon-pencil" actionListener="#{clienteC.actulcli}" oncomplete="PF('WigactuaM').show();" update=":foredit"/>
+                            <p:tooltip showEffect="clip" hideEffect="explode" position="top"/>     
+                        </p:column> 
+                    </p:dataTable>
+                </h:form>
+
+                <p:dialog widgetVar="WigactuaM"  responsive="true">
+                    <h:form id="foredit">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="TIPO DOCUMENTO"/>
+                            <p:selectOneMenu value="#{clienteC.cliente.TDOC_CLIE}" >
+                                <f:selectItem itemLabel="DNI" itemValue="D"/>
+                                <f:selectItem itemLabel="CARNET DE EXTRANGERIA" itemValue="C"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="DOCUMENTO"/>
+                            <p:inputText value="#{clienteC.cliente.DOCCLIE}" />
+
+                            <p:outputLabel value="NOMBRE"/>
+                            <p:inputText value="#{clienteC.cliente.NOMCLIE}" />
+
+                            <p:outputLabel value="APELLIDO PATERNO"/>
+                            <p:inputText value="#{clienteC.cliente.APEPATECLIE}" />
+
+                            <p:outputLabel value="APELLIDO MATERNO"/>
+                            <p:inputText value="#{clienteC.cliente.APEMATECLIE}" />
+
+                            <p:outputLabel value="TELEFONO"/>
+                            <p:inputText value="#{clienteC.cliente.TELFCLIE}" />
+
+                            <p:outputLabel value="CONTRASEÑA"/>
+                            <p:inputText value="#{clienteC.cliente.PWDCLIE}" />
+
+                            <p:outputLabel value="DIRECCION"/>
+                            <p:inputText value="#{clienteC.cliente.DIRCLIE}" />                    
+
+                            <p:commandButton value="Actualizar" actionListener="#{clienteC.modificar()}" update=":ListTabl" oncomplete="PF('WigactuaM').hide()"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>       
+    </h:body>
+</html>

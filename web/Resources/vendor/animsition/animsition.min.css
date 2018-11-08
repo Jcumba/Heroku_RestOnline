@@ -1,0 +1,9 @@
+.animsition{   
+    position: relative;
+    height: 100%;
+    background-size: cover;
+    background-color: skyblue;
+    overflow: auto;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+
+}

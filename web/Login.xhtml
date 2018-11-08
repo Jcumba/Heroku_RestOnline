@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Inicio de Sesion</title>
+        <link href="Resources/css/styles.css" rel="stylesheet" type="text/css"/>
+        <f:event type="preRenderView" listener="#{personalC.securityLogin()}"/>
+        <!-- Fontfaces CSS-->
+        <link href="Resources/css/font-face.css" rel="stylesheet" media="all"/>
+        <link href="Resources/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all"/>
+        <link href="Resources/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all"/>
+        <link href="Resources/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all"/>
+
+        <!-- Bootstrap CSS-->
+        <link href="Resources/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all"/>
+
+        <!-- Vendor CSS-->
+        <link href="Resources/vendor/animsition/animsition.min.css" rel="stylesheet" media="all"/>
+        <link href="Resources/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all"/>
+        <link href="Resources/vendor/wow/animate.css" rel="stylesheet" media="all"/>
+        <link href="Resources/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all"/>
+        <link href="Resources/vendor/slick/slick.css" rel="stylesheet" media="all"/>
+        <link href="Resources/vendor/select2/select2.min.css" rel="stylesheet" media="all"/>
+        <link href="Resources/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all"/>
+
+        <!-- Main CSS-->
+        <link href="Resources/css/theme.css" rel="stylesheet" media="all"/>
+
+    </h:head>
+
+    <body  class="animsition"
+           style="background-image: url(http://optimizaturestaurante.com/wp-content/uploads/2015/12/11.jpg);
+           background-size: 100% 100%;">
+        <div> 
+            <div class="login-wrap" >
+                <div class="login-content" 
+                     >
+                    <div class="login-logo">
+                        <a href="#">
+                            <img src="Resources/images/icon/logo.png"/>
+                        </a>
+                    </div>
+                    <div class="login-form" >
+                        <form action="" method="post">
+                            <h:form id="login" >
+                                <p:growl id="growlC" autoUpdate="true" showDetail="true" sticky="true" />
+                                <div class="form-group" >
+                                    <p:inputText id="documento" value="#{personalC.user}" required="true" 
+                                                 class="au-input au-input--full"
+                                                 requiredMessage="Se requiere documento!" 
+                                                 disabled="#{personalC.intentos le 2 ? false:true}"
+                                                 placeholder="Documento de identidad"
+                                                 />
+                                </div>
+                                <div class="form-group">
+
+                                    <p:inputText id="contra" value="#{personalC.pass}" required="true" 
+                                                 class="au-input au-input--full"
+                                                 requiredMessage="Se requiere Contraseña!" 
+                                                 type="password"
+                                                 disabled="#{personalC.intentos le 2 ? false:true}"
+                                                 placeholder="Contraseña"/>
+                                </div>
+                                <br/>
+                                <p:commandButton id="BtnIniciarSesion" 
+                                                 class="btn btn-primary btn-block"
+                                                 style="background: #ff0025;border-color: #ff0025;"
+                                                 actionListener="#{personalC.startSession()}"
+                                                 update="login"
+                                                 disabled="#{personalC.intentos le 2 ? false:true}"
+                                                 value="INGRESAR"
+                                                 >
+                                </p:commandButton>
+
+                                <p:blockUI block="login" trigger="BtnIniciarSesion" />
+                            </h:form>
+                        </form>
+                        <div class="register-link">
+                            <p style="color: #696969">
+                                ¿No tienes cuenta?
+                                <a href="#" style="color: #ee2b47">Registrate aquí</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jquery JS-->
+        <script src="Resources/vendor/jquery-3.2.1.min.js"></script>
+        <!-- Bootstrap JS-->
+        <script src="Resources/vendor/bootstrap-4.1/popper.min.js"></script>
+        <script src="Resources/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+        <!-- Vendor JS       -->
+        <script src="Resources/vendor/slick/slick.min.js">
+        </script>
+        <script src="Resources/vendor/wow/wow.min.js"></script>
+        <script src="Resources/vendor/animsition/animsition.min.js"></script>
+        <script src="Resources/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+        </script>
+        <script src="Resources/vendor/counter-up/jquery.waypoints.min.js"></script>
+        <script src="Resources/vendor/counter-up/jquery.counterup.min.js">
+        </script>
+        <script src="Resources/vendor/circle-progress/circle-progress.min.js"></script>
+        <script src="Resources/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+        <script src="Resources/vendor/chartjs/Chart.bundle.min.js"></script>
+        <script src="Resources/vendor/select2/select2.min.js">
+        </script>
+
+        <!-- Main JS-->
+        <script src="Resources/js/main.js"></script>
+
+    </body>
+</html>
+

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Restaurant-Personal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../Template/newTemplate.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="msj" autoUpdate="true"/>
+                <h:form id="AgregM">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Nombre y Apellido"/>
+                        <p:inputText value="#{personalC.personal.NOM_PER}" rendered="true" requiredMessage="Nombre Requerido"/>
+                        <p:outputLabel value="Tipo de documento"/>
+                        <p:selectOneMenu value="#{personalC.personal.TIP_DOC_PER}" >
+                            <f:selectItem itemLabel="DNI" itemValue="D"/>
+                            <f:selectItem itemLabel="CARNET DE EXTRANGERIA" itemValue="C"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Nro Docuemnto"/>
+                        <p:inputText value="#{personalC.personal.DOCUMENTO_PER}" rendered="true" requiredMessage="Documento Requerido"/>
+                        <p:outputLabel value="Sexo"/>
+                        <p:selectOneMenu value="#{personalC.personal.SEXO_PER}">
+                            <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                            <f:selectItem itemLabel="Femenino" itemValue="F"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Fecha de nacimiento"/>
+                        <p:inputMask mask="99/99/9999" value="#{personalC.personal.FEC_NAC_PER}" />
+                        <p:outputLabel value="Nro Celular"/>
+                        <p:inputText value="#{personalC.personal.TELEFONO_PER}" />
+                        <p:outputLabel value="Direccion"/>
+                        <p:inputText value="#{personalC.personal.DIR_PER}" rendered="true" requiredMessage="Direccion Requerida"/>
+                        <p:outputLabel value="Foto Personal"/>
+                        <p:inputText value="#{personalC.personal.FOTO_PER}" />
+                        <p:outputLabel value="Tipo Personal"/>
+                        <p:selectOneMenu value="#{personalC.personal.TIP_PER}">
+                            <f:selectItem itemLabel="Administrador" itemValue="1"/>
+                            <f:selectItem itemLabel="Cajero" itemValue="2"/>
+                            <f:selectItem itemLabel="Cocinero" itemValue="3"/>
+                            <f:selectItem itemLabel="Mesero" itemValue="4"/>
+                        </p:selectOneMenu>
+                         <p:outputLabel value="Contraseña"/>
+                         <p:inputText value="#{personalC.personal.CON_PER}" rendered="true" requiredMessage="Contraseña Requerida"/>
+                        
+                        <p:commandButton value="Agregar" actionListener="#{personalC.registrar()}" update="ListTabl"/>
+                    </p:panelGrid>
+                </h:form>
+                <h:form id="ListTabl">
+                    <p:dataTable id="TblMesa" value="#{personalC.lstPersonal}" var="listTblM">
+                        <p:column headerText="Nombres">
+                            <p:outputLabel value="#{listTblM.NOM_PER}"/>
+                        </p:column>
+                        <p:column headerText="Tipo de documento">
+                            <p:outputLabel value="#{listTblM.TIP_DOC_PER}"/>
+                        </p:column>
+                        <p:column headerText="Nro Documento">
+                            <p:outputLabel value="#{listTblM.DOCUMENTO_PER}"/>
+                        </p:column>
+                        <p:column headerText="Sexo">
+                            <p:outputLabel value="#{listTblM.SEXO_PER}"/>
+                        </p:column>
+                        <p:column headerText="Fecha de Nacimiento">
+                            <p:outputLabel value="#{listTblM.FEC_NAC_PER}"/>
+                        </p:column>
+                        <p:column headerText="Nro de celular">
+                            <p:outputLabel value="#{listTblM.TELEFONO_PER}"/>
+                        </p:column>
+                        <p:column headerText="Direccion">
+                            <p:outputLabel value="#{listTblM.DIR_PER}"/>
+                        </p:column>
+                        <p:column headerText="Foto">
+                            <p:outputLabel value="#{listTblM.FOTO_PER}"/>
+                        </p:column>
+                        <p:column headerText="Tipo de Personal">
+                            <p:outputLabel value="#{listTblM.TIP_PER}"/>
+                        </p:column>
+                        <p:column headerText="Contraseña">
+                            <p:outputLabel value="#{listTblM.CON_PER}"/>
+                        </p:column>
+                        <p:column headerText="Editar">
+                            <p:commandLink value="Editar" oncomplete="PF('WigactuaM').show()" update=":foredit">
+                                <f:setPropertyActionListener value="#{listTblM}" target="#{personalC.lstPeredit}"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <p:dialog widgetVar="WigactuaM"  responsive="true">
+                    <h:form id="foredit">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nombre y Apellido"/>
+                            <p:inputText value="#{personalC.lstPeredit.NOM_PER}" rendered="true" requiredMessage="Nombre Requerido"/>
+                            <p:outputLabel value="Tipo de documento"/>
+                            <p:selectOneMenu value="#{personalC.lstPeredit.TIP_DOC_PER}" >
+                                <f:selectItem itemLabel="DNI" itemValue="D"/>
+                                <f:selectItem itemLabel="CARNET DE EXTRANGERIA" itemValue="C"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Nro Docuemnto"/>
+                            <p:inputText value="#{personalC.personal.DOCUMENTO_PER}" rendered="true" requiredMessage="Nombre requerido"/>
+                            <p:outputLabel value="Sexo" />
+                            <p:selectOneMenu value="#{personalC.personal.SEXO_PER}">
+                                <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="F"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Nro Docuemnto" />
+                            <p:inputText value="#{personalC.lstPeredit.DOCUMENTO_PER}" rendered="true" requiredMessage="Nro de documento requerido"/>
+                            <p:outputLabel value="Fecha de nacimiento"/>
+                            <p:inputMask mask="99/99/9999" value="#{personalC.lstPeredit.FEC_NAC_PER}" />
+                            <p:outputLabel value="Nro Celular"/>
+                            <p:inputText value="#{personalC.lstPeredit.TELEFONO_PER}" />
+                            <p:outputLabel value="Direccion"/>
+                            <p:inputText value="#{personalC.lstPeredit.DIR_PER}" rendered="true" requiredMessage="Direccion Requerida"/>
+                            <p:outputLabel value="Foto Personal"/>
+                            <p:inputText value="#{personalC.lstPeredit.FOTO_PER}" />
+                            <p:outputLabel value="Tipo de personal"/>    
+                            <p:selectOneMenu value="#{personalC.lstPeredit.TIP_PER}">
+                                <f:selectItem itemLabel="Mesero" itemValue="M"/>
+                                <f:selectItem itemLabel="Cocinero" itemValue="C"/>
+                                <f:selectItem itemLabel="Cajero" itemValue="C"/>
+                                <f:selectItem itemLabel="Administrador" itemValue="A"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Contraseña"/>
+                            <p:inputText value="#{personalC.lstPeredit.CON_PER}" />
+                            
+                            <p:commandButton value="Actualizar" actionListener="#{personalC.modificar()}" update=":ListTabl" oncomplete="PF('WigactuaM').hide()"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>

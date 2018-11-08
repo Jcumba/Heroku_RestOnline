@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>RESERVACIONES</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../../Resources/css/boton.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../Template/newTemplate.xhtml">
+            <ui:define name="content">
+
+                <!--            <h:form>
+                                <p:breadCrumb>
+                                    <p:menuitem value="1" url="#" />
+                                    <p:menuitem value="CLIENTE" url="../Cliente/cliente.xhtml" />
+                                    <p:menuitem value="Mesas" url="../Mesa/mesa.xhtml"/>
+                                    <p:menuitem value="PERSONAL" url="../Personal/personal.xhtml" />
+                                    <p:menuitem value="PRODUCTOS" url="../Producto/producto.xhtml" />
+                                    <p:menuitem value="RESERVACIONES" url="../Reservaciones/Reservaciones.xhtml" />
+                                    <p:menuitem value="LOGIN" url="../../Login.xhtml" />
+                                </p:breadCrumb>
+                            </h:form>-->
+
+                <h:form id="form">
+                    <p:wizard> 
+                        <!--                        <p:tab>
+                                                    <h:outputText value="Menú del día: #{lst.PRECIO_PROD}"/>
+                                                    <p:selectBooleanCheckbox />
+                                                </p:tab>
+                                                <p:tab>
+                        
+                                                    <p:tabView dynamic="true" cache="true" effect="fold" value="#{productoC.lstProducto }">
+                                                        <p:dataTable id="producto" var="producto" value="#{productoC.lstProducto}">
+                                                            <p:tab title="PRODUCTOS" >
+                                                                <h:panelGrid columns="5" cellpadding="5" >
+                                                                    <img class="imagen" src="#{producto.FOTOPROD}"/>
+                                                                    <h:outputText value="Nombre del Producto: #{producto.NOMPROD}"/>
+                                                                    <h:outputText value="Precio: S/ #{producto.PRECIOPROD}"/>
+                                                                </h:panelGrid>
+                                                            </p:tab>
+                                                        </p:dataTable>
+                        
+                        
+                        
+                                                    </p:tabView>
+                        
+                                                    <p:selectBooleanCheckbox />
+                        
+                        
+                                                </p:tab>-->
+
+                        <p:tab>
+                            <p:growl autoUpdate="true"/>    
+                            <H4>RESERVACIÓN</H4>
+                            <p:fieldset legend="CLIENTE" style="background: #f7f9ff;" >
+                                <p:panelGrid style="border: none" columns="2">
+
+                                    <p:outputLabel value="CLIENTE"/>
+                                    <p:autoComplete value="#{reservacionesC.reserva.CODCLIE}" completeMethod="#{clienteC.completeTextCliente}" forceSelection="true">
+                                        <p:ajax event="itemSelect" listener="#{clienteC.lstCliente}" update="form" />
+                                    </p:autoComplete>
+
+
+                                </p:panelGrid>
+                            </p:fieldset>
+
+                            <H4>MESA</H4>
+                            <p:fieldset legend="MESA" style="background: #f7f9ff;">
+                                <p:panelGrid style="border: none" columns="4">
+
+                                    <p:outputLabel value="MESA"/>
+                                    <p:selectOneMenu value="#{reservacionesC.reserva.CODMESA}">
+                                        <f:selectItem itemLabel="SELECCIONE MESA" noSelectionOption="true"/>
+                                        <f:selectItems value="#{mesaC.lstMesa}" var="mesa" itemLabel="MESA #{mesa.NUM_MESA} TIENE #{mesa.CANT_SILLAS_MESA} SILLAS Y ESTA #{mesa.ESTADO}" itemValue="#{mesa.COD_MESA}"/>
+                                    </p:selectOneMenu>
+
+
+
+                                </p:panelGrid>
+                            </p:fieldset>
+
+                            <H4>PRODUCTO</H4>
+                            <p:fieldset legend="PRODUCTO" style="background: #f7f9ff;">
+
+                                <p:panelGrid style="border: none" columns="4">
+                                    <p:outputLabel value="PRODUCTO"/>
+                                    <p:autoComplete value="#{reservacionesC.reserva.CODPROD}" completeMethod="#{productoC.completeTextProducto}" forceSelection="true">
+                                        <p:ajax event="itemSelect" listener="#{productoC.lstProducto}" update="form" />
+                                    </p:autoComplete>
+
+
+                                </p:panelGrid>
+                            </p:fieldset>
+
+                            <H4>RESERVACIÓN</H4>
+                            <p:fieldset legend="RESERVACIÓN" style="background: #f7f9ff;">
+                                <p:panelGrid style="border: none" columns="4">
+
+                                    <p:outputLabel for="txtFEcha" value="FECHA DE RESERVA" />
+                                    <p:inputText id="txtFEcha" value="#{reservacionesC.act}"/>
+
+
+                                    <p:outputLabel for="txtHoraReserva" value="HORA DE RESERVA" />
+                                    <p:inputText id="txtHoraReserva" value="#{reservacionesC.reserva.HORRES}"/>
+
+
+
+                                    <h:outputLabel for="basic" value="CANTIDAD" />
+                                    <p:spinner id="basic" value="#{reservacionesC.reserva.CANTPROD}" min="0">
+                                        <p:keyFilter regEx="/[\d\-]/"/>
+                                    </p:spinner>
+
+
+                                </p:panelGrid>                               
+                            </p:fieldset>
+                            <center>
+                                <p:commandButton title="REGISTRAR COMPLETO"  actionListener="#{reservacionesC.registrarRese()}"  update="form"/>
+                            </center>
+                            <p:growl id="msg" autoUpdate="true"/>
+                            <p:dataTable var="reserva" value="#{reservacionesC.listProd}" rows="10" 
+                                         paginator="true"
+                                         paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15">
+                                <f:facet name="header" class="cabezera">
+                                    <center style="background-color: red; color: white; width: 100%">
+                                        RESERVACIONES
+                                    </center>
+                                </f:facet>
+                                <p:column headerText="CLIENTE" style="color: green">
+                                    <h:outputText value="#{reserva.CLIENTE}"/>
+                                </p:column>
+                                <p:column headerText="FECHA">
+                                    <h:outputText value="#{reserva.FECRES}"/>
+                                </p:column>
+                                <p:column headerText="HORA">
+                                    <h:outputText value="#{reserva.HORRES}"/>
+                                </p:column>
+                                <p:column headerText="MESA">
+                                    <h:outputText value="#{reserva.MESA}"/>
+                                </p:column>
+                                <p:column headerText="PRODUCTO">
+                                    <h:outputText value="#{reserva.PRODUCTO}"/>
+                                </p:column>
+                                <p:column headerText="PRECIO">
+                                    <h:outputText value="#{reserva.PRECIOPROD}"/>
+                                </p:column>
+                                <p:column headerText="OFERTA">
+                                    <h:outputText value="#{reserva.OFERTA}"/>
+                                </p:column>
+
+                                <p:column headerText="CANTIDAD">
+                                    <h:outputText value="#{reserva.CANTPROD}"/>
+                                </p:column>
+
+
+
+
+                            </p:dataTable>
+                        </p:tab>
+
+
+                    </p:wizard>
+
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+
